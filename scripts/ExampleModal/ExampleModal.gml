@@ -69,6 +69,7 @@ function ExampleModal()
                                 
                                 BentoCreate(oBentoExButton, {
                                     text: "Yep",
+                                    hotkey: BENTO_HOTKEY_CANCEL,
                                     func: function()
                                     {
                                         BentoLayerDestroy("modal 1");
@@ -107,6 +108,7 @@ function ExampleModal()
                                                     
                                                     BentoCreate(oBentoExButton, {
                                                         text: "Close please",
+                                                        hotkey: BENTO_HOTKEY_CANCEL,
                                                         func: function()
                                                         {
                                                             BentoLayerDestroy("modal 2");
