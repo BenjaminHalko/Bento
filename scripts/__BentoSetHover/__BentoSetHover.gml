@@ -1,6 +1,7 @@
 // Feather disable all
 
-/// Starts the hover state for an element. This must be called in the scope of a layer struct.
+/// Starts the hover state for an element. This must be called in the scope of a player struct
+/// (see `__BentoClassPlayer()`).
 /// 
 /// @param element
 /// @param byPlayer
@@ -25,18 +26,20 @@ function __BentoSetHover(_element, _byPlayer)
         __hoverElement = _element;
         
         //So long as we have a drag & drop element, set its target
-        if (BentoExists(__carryItemElement))
+        var _carryItemElement = __layer.__carryItemElement;
+        if ((__playerIndex == __layer.__carryPlayerIndex) && BentoExists(_carryItemElement))
         {
-            __carryItemElement.BENTO_VARS.__carryTargetElement = _element;
+            _carryItemElement.BENTO_VARS.__carryTargetElement = _element;
         }
         
+        var _playerIndex = __playerIndex;
         with(_element.BENTO_VARS)
         {
             __BentoSetAsUpdating();
             
             if (_byPlayer)
             {
-                __byPlayer = true;
+                __byPlayer[_playerIndex] = true;
             }
         }
     }

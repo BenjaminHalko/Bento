@@ -11,9 +11,9 @@ function __BentoGetNavigationNearest(_x, _y, _exclude)
     static _system = __BentoSystem();
     
     var _layer = _system.__layerCurrent;
-    var _hoverableOrder = _layer.__hoverableOrder;
+    var _hoverableOrder = _layer.__hoverableOrderNavigation;
     
-    if (not _layer.__inputModeNavigation)
+    if (not __inputModeNavigation)
     {
         __BentoError("Can only use `__BentoGetNavigationNearest()` in navigation mode");
     }
@@ -27,7 +27,7 @@ function __BentoGetNavigationNearest(_x, _y, _exclude)
         {
             if (BENTO_VARS != _exclude)
             {
-                if (__BentoGetHoverableInternal(self, true))
+                if (__BentoGetHoverableInternal(self, true, other.__playerIndex))
                 {
                     var _distance = point_distance(0.5*(bentoLeft + bentoRight), 0.5*(bentoTop + bentoBottom), _x, _y);
                     if (_distance < _nearestDistance)

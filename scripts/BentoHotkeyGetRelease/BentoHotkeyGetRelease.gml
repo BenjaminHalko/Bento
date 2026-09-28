@@ -9,8 +9,9 @@
 /// @param name
 /// @param [ignoreConsume=false]
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoHotkeyGetRelease(_name, _ignoreConsume = false, _layerOrName = undefined)
+function BentoHotkeyGetRelease(_name, _ignoreConsume = false, _layerOrName = undefined, _playerIndex = 0)
 {
     if (_name == undefined)
     {
@@ -19,8 +20,11 @@ function BentoHotkeyGetRelease(_name, _ignoreConsume = false, _layerOrName = und
     
     with(__BentoLayerSeek(_layerOrName))
     {
-        if ((not _ignoreConsume) && (__hotkeyConsumedMap[? _name] ?? false)) return false;
-        return (__hotkeyStateMap[? _name] == __BENTO_STATE_END);
+        with(__playerArray[_playerIndex])
+        {
+            if ((not _ignoreConsume) && (__hotkeyConsumedMap[? _name] ?? false)) return false;
+            return (__hotkeyStateMap[? _name] == __BENTO_STATE_END);
+        }
     }
     
     return false;

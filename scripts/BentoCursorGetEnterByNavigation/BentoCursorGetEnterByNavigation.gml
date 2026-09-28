@@ -12,9 +12,10 @@
 /// - Entering into a focusable container e.g. a scrollbox
 /// 
 /// @param [element=self]
+/// @param [playerIndex=0]
 
-function BentoCursorGetEnterByPlayer(_element = self)
+function BentoCursorGetEnterByPlayer(_element = self, _playerIndex = 0)
 {
     if (not BentoExists(_element)) return false;
-    return _element.BENTO_VARS.__byPlayer;
+    return _element.BENTO_VARS.__byPlayer[_playerIndex];
 }

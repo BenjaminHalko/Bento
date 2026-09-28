@@ -9,7 +9,7 @@ function BentoGetExecutesStep(_element = self)
     with(_element)
     {
         //NOTE - This logic must match `__BentoEnsureStepOrderInner()`
-        return ((not __disable) && (BENTO_ALWAYS_EXECUTE_STEP || (__buttonIndex == __layer.__hoverableRegenCount) || __forceStep || __focused || __scissorEnabled));
+        return ((not __disable) && (BENTO_ALWAYS_EXECUTE_STEP || (__buttonIndexPointer == __layer.__hoverableRegenCount) || (__buttonIndexNavigation == __layer.__hoverableRegenCount) || __forceStep || __focused || __scissorEnabled));
     }
     
     return false;

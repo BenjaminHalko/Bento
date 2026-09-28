@@ -5,12 +5,16 @@
 /// would return where the cursor was when the mouse was last clicked.
 /// 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoCursorGetPressY(_layerOrName = undefined)
+function BentoCursorGetPressY(_layerOrName = undefined, _playerIndex = 0)
 {
     with(__BentoLayerSeek(_layerOrName))
     {
-        return __inputModePointer? __pointerPressY : __navigationLastY;
+        with(__playerArray[_playerIndex])
+        {
+            return __inputModePointer? __pointerPressY : __navigationLastY;
+        }
     }
     
     return 0;

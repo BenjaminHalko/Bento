@@ -37,9 +37,10 @@
 /// 
 /// @param focusType
 /// @param [element=self]
+/// @param [playerIndex=0]
 
 
-function BentoFocusOpen(_focusType, _element = self)
+function BentoFocusOpen(_focusType, _element = self, _playerIndex = 0)
 {
     with(__BentoGetVars(_element))
     {
@@ -49,7 +50,7 @@ function BentoFocusOpen(_focusType, _element = self)
         
         //If the player is using a pointer but we want to always cancel focus when using a pointer
         //then sort that out
-        if (_layer.__inputModePointer && (_focusType == BENTO_FOCUS_POINTER_CANCEL_ALWAYS))
+        if (_layer.__playerArray[_playerIndex].__inputModePointer && (_focusType == BENTO_FOCUS_POINTER_CANCEL_ALWAYS))
         {
             BentoFocusClose(_element);
             return;
@@ -81,28 +82,31 @@ function BentoFocusOpen(_focusType, _element = self)
                 BentoFocusClose(_focusElement);
             }
             
+            var _player = _layer.__playerArray[_playerIndex];
+            
             array_push(_focusStack, {
-                __prevHoverElement: _layer.__hoverElement,
+                __prevHoverElement: _player.__hoverElement,
                 __focusElement: _element,
+                __playerIndex: _playerIndex,
             });
             
             _layer.__focusTop = _element;
             
-            _layer.__cursorLastL = _element.bentoLeft;
-            _layer.__cursorLastT = _element.bentoTop;
-            _layer.__cursorLastR = _element.bentoRight;
-            _layer.__cursorLastB = _element.bentoBottom;
+            _player.__cursorLastL = _element.bentoLeft;
+            _player.__cursorLastT = _element.bentoTop;
+            _player.__cursorLastR = _element.bentoRight;
+            _player.__cursorLastB = _element.bentoBottom;
             
             if (__scissorEnabled)
             {
                 //Use the smaller scissor region
-                _layer.__navigationLastX = _element.bentoLeft + __scissorPadLeft + __scissorScrollbarLeft;
-                _layer.__navigationLastY = _element.bentoTop  + __scissorPadTop + __scissorScrollbarTop;
+                _player.__navigationLastX = _element.bentoLeft + __scissorPadLeft + __scissorScrollbarLeft;
+                _player.__navigationLastY = _element.bentoTop  + __scissorPadTop + __scissorScrollbarTop;
             }
             else
             {
-                _layer.__navigationLastX = _element.bentoLeft;
-                _layer.__navigationLastY = _element.bentoTop;
+                _player.__navigationLastX = _element.bentoLeft;
+                _player.__navigationLastY = _element.bentoTop;
             }
         }
     }

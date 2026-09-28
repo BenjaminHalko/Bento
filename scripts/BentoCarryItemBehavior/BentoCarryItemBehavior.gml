@@ -10,29 +10,35 @@ function BentoCarryItemBehavior(_element = self)
 {
     var _layer = BentoGetLayer(_element);
     
-    if (BentoUsingPointer())
+    var _playerIndex = 0;
+    repeat(BENTO_MAX_PLAYERS)
     {
-        if (BentoPrimaryGetHold(_element) && BentoPrimaryGetDragged(_layer))
+        if (BentoUsingPointer(undefined, _playerIndex))
         {
-            BentoCarryItemPickContinuous(_element);
-        }
-    }
-    else if (BentoUsingNavigation())
-    {
-        if (not BentoCarryIsItem(_element))
-        {
-            if (BentoPrimaryGetClick(_element))
+            if (BentoPrimaryGetHold(_element, _playerIndex) && BentoPrimaryGetDragged(_layer, _playerIndex))
             {
-                BentoCarryItemPick(_element);
+                BentoCarryItemPickContinuous(_element, _playerIndex);
             }
         }
-        else
+        else if (BentoUsingNavigation(undefined, _playerIndex))
         {
-            if (BentoPrimaryGetPress(_element) || BentoHotkeyGetPress(BENTO_HOTKEY_CANCEL))
+            if (not BentoCarryIsItem(_element))
             {
-                BentoCarryItemDrop(_element);
+                if (BentoPrimaryGetClick(_element, _playerIndex))
+                {
+                    BentoCarryItemPick(_element, _playerIndex);
+                }
+            }
+            else if (_playerIndex == _layer.__carryPlayerIndex)
+            {
+                if (BentoPrimaryGetPress(_element, _playerIndex) || BentoHotkeyGetPress(BENTO_HOTKEY_CANCEL, false, _layer, _playerIndex))
+                {
+                    BentoCarryItemDrop(_element);
+                }
             }
         }
+        
+        ++_playerIndex;
     }
     
     return BentoCarryGetItemDropped()? BentoCarryGetTarget(_element) : BENTO_NO_ELEMENT;

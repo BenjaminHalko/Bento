@@ -19,6 +19,7 @@ function __BentoFocusCloseInner(_element)
         __dirtyFlags |= __BENTO_DIRTY_STEP | __BENTO_DIRTY_HOVERABLE;
         
         var _prevHoverElement = BENTO_NO_ELEMENT;
+        var _prevPlayerIndex  = undefined;
         
         //Find the focus element that just closed in the stack
         var _focusStack = __focusStack;
@@ -30,6 +31,7 @@ function __BentoFocusCloseInner(_element)
             {
                 //We found it, collect the element that was hovered before the element was focused
                 _prevHoverElement = _focusInfo.__prevHoverElement
+                _prevPlayerIndex  = _focusInfo.__playerIndex;
                 break;
             }
             
@@ -58,14 +60,17 @@ function __BentoFocusCloseInner(_element)
         
         //If we're using navigation input mode then try to hover the element that was previously
         //hovered before the element was focused
-        if (__inputModeNavigation)
+        if ((_prevPlayerIndex != undefined) && __playerArray[_prevPlayerIndex].__inputModeNavigation)
         {
             __BentoEnsureHoverableOrder();
             
             if (__BentoGetHoverableInternal(_prevHoverElement, false))
             {
-                __BentoSetHover(_prevHoverElement, false);
-                __hoverElementSoft = BENTO_NO_ELEMENT;
+                with(__playerArray[_prevPlayerIndex])
+                {
+                    __BentoSetHover(_prevHoverElement, false);
+                    __hoverElementSoft = BENTO_NO_ELEMENT;
+                }
             }
         }
     }

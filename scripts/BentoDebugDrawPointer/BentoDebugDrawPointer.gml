@@ -28,7 +28,12 @@ function BentoDebugDrawPointer(_xOffset = 0, _yOffset = 0)
         {
             with(_environmentArray[_i])
             {
-                BentoDrawCross(__envMouseX, __envMouseY);
+                var _j = 0;
+        repeat(BENTO_MAX_PLAYERS)
+                {
+                    BentoDrawCross(__envMouseX[_j], __envMouseY[_j]);
+                    ++_j;
+                }
             }
             
             ++_i;

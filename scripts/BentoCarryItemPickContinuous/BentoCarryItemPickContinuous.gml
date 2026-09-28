@@ -14,14 +14,16 @@
 ///      Step after this function is called.
 /// 
 /// @param [element=self]
+/// @param [playerIndex=0]
 
-function BentoCarryItemPickContinuous(_element = self)
+function BentoCarryItemPickContinuous(_element = self, _playerIndex = 0)
 {
     with(__BentoGetVars(_element))
     {
         if (__carryItemChannel != undefined)
         {
             __layer.__carryNextItemElement = _element;
+            __layer.__carryNextPlayerIndex = _playerIndex;
             __carryItemContinuous = true;
         }
         else

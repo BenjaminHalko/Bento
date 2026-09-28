@@ -10,16 +10,16 @@ function __BentoSetHoverFromNavigation(_prevElement, _dX, _dY)
     static _wrappedRaycastData = {};
     
     //Can't hover anything when there are blocking animations on this layer.
-    if (not ds_map_empty(__animBlockingMap)) return BENTO_NO_ELEMENT;
+    if (not ds_map_empty(__layer.__animBlockingMap)) return BENTO_NO_ELEMENT;
     
     var _exclude = (_prevElement != BENTO_NO_ELEMENT)? _prevElement.BENTO_VARS : undefined;
     var _nextElement = BENTO_NO_ELEMENT;
     
-    if (not __BentoGetHoverableInternal(_prevElement, false))
+    if (not __BentoGetHoverableInternal(_prevElement, false, __playerIndex))
     {
         //The element we were previously highlighting is no longer valid (see __BentoGetHoverableInternal())
         
-        if (__BentoGetHoverableInternal(__hoverElementSoft, false))
+        if (__BentoGetHoverableInternal(__hoverElementSoft, false, __playerIndex))
         {
             //Choose the soft hover if possible
             _nextElement = __hoverElementSoft;
@@ -69,7 +69,7 @@ function __BentoSetHoverFromNavigation(_prevElement, _dX, _dY)
                 //to navigate to visually hidden elements inside the scroller.
                 var _prevScrollParent = __BentoFindScrollElement(BentoGetParent(1, _prevElement));
                 var _checkVisible = (_prevScrollParent != __BentoFindScrollElement(_nextElement));
-                if (not __BentoGetHoverableInternal(_nextElement, _checkVisible))
+                if (not __BentoGetHoverableInternal(_nextElement, _checkVisible, __playerIndex))
                 {
                     _nextElement = BENTO_NO_ELEMENT;
                 }

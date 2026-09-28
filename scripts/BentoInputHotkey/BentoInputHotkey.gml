@@ -7,13 +7,15 @@
 /// 
 /// @param name
 /// @param value
+/// @param [playerIndex=0]
 
-function BentoInputHotkey(_name, _value)
+function BentoInputHotkey(_name, _value, _playerIndex = 0)
 {
     static _system = __BentoSystem();
     with(_system.__environmentCurrent)
     {
-        __envHotkeyInputMap[? _name] = _value;
+        __envHotkeyInputMap[_playerIndex][? _name] = _value;
         __envHotkeySeenMap[?  _name] = true;
+        __envPlayerActive[_playerIndex] = true;
     }
 }

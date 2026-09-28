@@ -13,8 +13,9 @@
 /// @param dY
 /// @param primaryAction
 /// @param [threshold=0.25]
+/// @param [playerIndex=0]
 
-function BentoInputNavigation(_dX, _dY, _primaryAction, _threshold = 0.25)
+function BentoInputNavigation(_dX, _dY, _primaryAction, _threshold = 0.25, _playerIndex = 0)
 {
     static _system = __BentoSystem();
     with(_system.__environmentCurrent)
@@ -25,8 +26,9 @@ function BentoInputNavigation(_dX, _dY, _primaryAction, _threshold = 0.25)
             _dY = 0;
         }
         
-        __envNavigationDX   = _dX;
-        __envNavigationDY   = _dY;
-        __envNavigationHold = _primaryAction;
+        __envNavigationDX[_playerIndex]   = _dX;
+        __envNavigationDY[_playerIndex]   = _dY;
+        __envNavigationHold[_playerIndex] = _primaryAction;
+        __envPlayerActive[_playerIndex] = true;
     }
 }

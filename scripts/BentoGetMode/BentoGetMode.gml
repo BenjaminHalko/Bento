@@ -10,11 +10,12 @@
 /// - `BENTO_MODE_TOUCH`
 /// 
 /// @param [environmentName=current]
+/// @param [playerIndex=0]
 
-function BentoGetMode(_environmentOrName = undefined)
+function BentoGetMode(_environmentOrName = undefined, _playerIndex = 0)
 {
     with(__BentoEnvironmentSeek(_environmentOrName))
     {
-        return __envInputMode;
+        return __envInputMode[_playerIndex];
     }
 }

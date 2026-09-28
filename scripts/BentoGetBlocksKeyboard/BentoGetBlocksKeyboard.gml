@@ -16,7 +16,12 @@ function BentoGetBlocksKeyboard(_environmentName = undefined)
     
     with(__BentoEnvironmentSeek(_environmentName))
     {
-        if (__layerCurrent.__inputMode == BENTO_MODE_KEYBOARD) return true;
+        var _i = 0;
+        repeat(BENTO_MAX_PLAYERS)
+        {
+            if (__layerCurrent.__playerArray[_i].__inputMode == BENTO_MODE_KEYBOARD) return true;
+            ++_i;
+        }
     }
     
     return false;

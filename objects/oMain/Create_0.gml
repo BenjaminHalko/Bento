@@ -2,6 +2,8 @@
 
 screenshotName = undefined;
 
+playerCount = 1;
+
 BentoLayerCreate("example layer");
 ExampleHomePage();
 

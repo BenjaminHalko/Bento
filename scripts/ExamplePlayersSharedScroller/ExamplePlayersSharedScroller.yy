@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ExamplePlayersSharedScroller",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ExamplePlayersSharedScroller",
+  "parent":{
+    "name":"Pages",
+    "path":"folders/Examples/Pages.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

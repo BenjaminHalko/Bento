@@ -11,19 +11,23 @@
 /// 
 /// @param [navigationThreshold=0.001]
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoCursorGetDY(_navigationThreshold = 0.001, _layerOrName = undefined)
+function BentoCursorGetDY(_navigationThreshold = 0.001, _layerOrName = undefined, _playerIndex = 0)
 {
     with(__BentoLayerSeek(_layerOrName))
     {
-        if (__inputModePointer)
+        with(__playerArray[_playerIndex])
         {
-            return (__pointerPrimaryState & __BENTO_STATE_START)? (__pointerY - __pointerPrevY) : 0;
-        }
-        else if (__inputModeNavigation)
-        {
-            var _output = __turboState.__outputY;
-            return (abs(_output) < _navigationThreshold)? 0 : _output;
+            if (__inputModePointer)
+            {
+                return (__pointerPrimaryState & __BENTO_STATE_START)? (__pointerY - __pointerPrevY) : 0;
+            }
+            else if (__inputModeNavigation)
+            {
+                var _output = __turboState.__outputY;
+                return (abs(_output) < _navigationThreshold)? 0 : _output;
+            }
         }
     }
     

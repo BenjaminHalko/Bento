@@ -5,8 +5,9 @@
 /// @param name
 /// @param [ignoreConsume=false]
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoHotkeyGetHold(_name, _ignoreConsume = false, _layerOrName = undefined)
+function BentoHotkeyGetHold(_name, _ignoreConsume = false, _layerOrName = undefined, _playerIndex = 0)
 {
     if (_name == undefined)
     {
@@ -15,8 +16,11 @@ function BentoHotkeyGetHold(_name, _ignoreConsume = false, _layerOrName = undefi
     
     with(__BentoLayerSeek(_layerOrName))
     {
-        if ((not _ignoreConsume) && (__hotkeyConsumedMap[? _name] ?? false)) return false;
-        return (__hotkeyStateMap[? _name] == __BENTO_STATE_ON);
+        with(__playerArray[_playerIndex])
+        {
+            if ((not _ignoreConsume) && (__hotkeyConsumedMap[? _name] ?? false)) return false;
+            return (__hotkeyStateMap[? _name] == __BENTO_STATE_ON);
+        }
     }
     
     return false;

@@ -7,8 +7,9 @@
 ///      `BentoPrimaryGetClick()`.
 /// 
 /// @param [element]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetPress(_element = self)
+function BentoPrimaryGetPress(_element = self, _playerIndex = 0)
 {
-    return BentoExists(_element)? (_element.BENTO_VARS.__primaryState == __BENTO_STATE_START) : false;
+    return BentoExists(_element)? (_element.BENTO_VARS.__primaryState[_playerIndex] == __BENTO_STATE_START) : false;
 }

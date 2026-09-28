@@ -23,15 +23,18 @@ function __BentoClassVariables(_attachedElement) constructor
     
     __disable        = false;
     __visible        = true;
-    __buttonIndex    = undefined;
-    __hoverableIndex = undefined;
+    __buttonIndexPointer       = undefined;
+    __buttonIndexNavigation    = undefined;
+    __hoverableIndexPointer    = undefined;
+    __hoverableIndexNavigation = undefined;
     
     __callbackOnDestroy = undefined;
     __callbackOnDestroyParams = undefined;
     
     if (BENTO_ALLOW_ENCLOSED_GETTER)
     {
-        __enclosed = false;
+        __enclosedPointer    = false;
+        __enclosedNavigation = false;
     }
     
     //Forced position
@@ -59,16 +62,16 @@ function __BentoClassVariables(_attachedElement) constructor
     __transformScaleY  = 1;
     __transformAngle   = 0;
     
-    __hoverState       = __BENTO_STATE_OFF;
-    __primaryState     = __BENTO_STATE_OFF;
-    __primaryLongState = __BENTO_STATE_OFF;
-    __byPlayer         = false;
-    __clickState       = 0b00;
+    __hoverState       = array_create(BENTO_MAX_PLAYERS, __BENTO_STATE_OFF);
+    __primaryState     = array_create(BENTO_MAX_PLAYERS, __BENTO_STATE_OFF);
+    __primaryLongState = array_create(BENTO_MAX_PLAYERS, __BENTO_STATE_OFF);
+    __byPlayer         = array_create(BENTO_MAX_PLAYERS, false);
+    __clickState       = array_create(BENTO_MAX_PLAYERS, 0b00);
     __hotspotScale     = 1;
     
     __longPressEnabled = false;
     __clickTiming      = undefined;
-    __pressTime        = -infinity;
+    __pressTime        = array_create(BENTO_MAX_PLAYERS, -infinity);
     
     __carryItemState            = __BENTO_STATE_OFF;
     __carryItemContinuous       = true;
@@ -93,6 +96,7 @@ function __BentoClassVariables(_attachedElement) constructor
     
     __forceStep            = false;
     __buttonType           = BENTO_BUTTON_NEVER;
+    __players              = undefined;
     __executesStep         = false;
     __drawAfter            = false;
     __holdBlocksDragScroll = false;

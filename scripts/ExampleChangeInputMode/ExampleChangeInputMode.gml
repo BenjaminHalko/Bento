@@ -26,70 +26,60 @@ function ExampleChangeInputMode()
                 font: fntBentoExCandyBeans,
                 text: function()
                 {
-                    if (BentoUsingMouse())
+                    var _text = "";
+                    var _playerIndex = 0;
+                    repeat(oMain.playerCount)
                     {
-                        return $"Currently using mouse input";
+                        var _mode = BentoGetMode(undefined, _playerIndex);
+                        _text += $"Player {_playerIndex + 1} is using {["unknown", "mouse", "keyboard", "gamepad", "touch"][_mode]} input\n";
+                        ++_playerIndex;
                     }
-                    else if (BentoUsingKeyboard())
-                    {
-                        return $"Currently using keyboard input";
-                    }
-                    else if (BentoUsingGamepad())
-                    {
-                        return $"Currently using gamepad input";
-                    }
-                    else if (BentoUsingTouch())
-                    {
-                        return $"Currently using touch input";
-                    }
-                    else
-                    {
-                        return $"Current using input mode {BentoGetMode()}";
-                    }
-                }
+                    
+                    return _text;
+                },
             });
             
             BentoCreate(oBentoExButton, {
                 text: "Mouse",
                 inoperative: (not BENTO_ON_DESKTOP),
-                func: function()
+                func: function(_playerIndex)
                 {
-                    BentoSetMode(BENTO_MODE_MOUSE);
+                    BentoSetMode(BENTO_MODE_MOUSE, undefined, _playerIndex);
                 },
             });
             
             BentoCreate(oBentoExButton, {
                 text: "Keyboard",
                 inoperative: (not BENTO_ON_DESKTOP),
-                func: function()
+                func: function(_playerIndex)
                 {
-                    BentoSetMode(BENTO_MODE_KEYBOARD);
+                    BentoSetMode(BENTO_MODE_KEYBOARD, undefined, _playerIndex);
                 },
             });
             
             BentoCreate(oBentoExButton, {
                 text: "Keyboard",
                 inoperative: (not BENTO_ON_DESKTOP),
-                func: function()
+                func: function(_playerIndex)
                 {
-                    BentoSetMode(BENTO_MODE_KEYBOARD);
+                    BentoSetMode(BENTO_MODE_KEYBOARD, undefined, _playerIndex);
                 },
             });
             
             BentoCreate(oBentoExButton, {
                 text: "Gamepad",
-                func: function()
+                func: function(_playerIndex)
                 {
-                    BentoSetMode(BENTO_MODE_GAMEPAD);
+                    BentoSetMode(BENTO_MODE_GAMEPAD, undefined, _playerIndex);
                 },
             });
             
             BentoCreate(oBentoExButton, {
                 text: "Touch",
                 inoperative: not (BENTO_ON_DESKTOP || BENTO_ON_MOBILE),
-                func: function()
+                func: function(_playerIndex)
                 {
-                    BentoSetMode(BENTO_MODE_TOUCH);
+                    BentoSetMode(BENTO_MODE_TOUCH, undefined, _playerIndex);
                 },
             });
             
@@ -143,26 +133,16 @@ function ExampleChangeInputModeJSON()
                     vars: {
                         text: function()
                         {
-                            if (BentoUsingMouse())
+                            var _text = "";
+                            var _playerIndex = 0;
+                            repeat(oMain.playerCount)
                             {
-                                return $"Currently using mouse input";
+                                var _mode = BentoGetMode(undefined, _playerIndex);
+                                _text += $"Player {_playerIndex + 1} is using {["unknown", "mouse", "keyboard", "gamepad", "touch"][_mode]} input\n";
+                                ++_playerIndex;
                             }
-                            else if (BentoUsingKeyboard())
-                            {
-                                return $"Currently using keyboard input";
-                            }
-                            else if (BentoUsingGamepad())
-                            {
-                                return $"Currently using gamepad input";
-                            }
-                            else if (BentoUsingTouch())
-                            {
-                                return $"Currently using touch input";
-                            }
-                            else
-                            {
-                                return $"Current using input mode {BentoGetMode()}";
-                            }
+                            
+                            return _text;
                         },
                         font: fntBentoExCandyBeans,
                     },
@@ -172,9 +152,9 @@ function ExampleChangeInputModeJSON()
                     vars: {
                         text: "Mouse",
                         inoperative: (not BENTO_ON_DESKTOP),
-                        func: function()
+                        func: function(_playerIndex)
                         {
-                            BentoSetMode(BENTO_MODE_MOUSE);
+                            BentoSetMode(BENTO_MODE_MOUSE, undefined, _playerIndex);
                         },
                     },
                 },
@@ -183,9 +163,9 @@ function ExampleChangeInputModeJSON()
                     vars: {
                         text: "Keyboard",
                         inoperative: (not BENTO_ON_DESKTOP),
-                        func: function()
+                        func: function(_playerIndex)
                         {
-                            BentoSetMode(BENTO_MODE_KEYBOARD);
+                            BentoSetMode(BENTO_MODE_KEYBOARD, undefined, _playerIndex);
                         },
                     },
                 },
@@ -193,9 +173,9 @@ function ExampleChangeInputModeJSON()
                     object: oBentoExButton,
                     vars: {
                         text: "Gamepad",
-                        func: function()
+                        func: function(_playerIndex)
                         {
-                            BentoSetMode(BENTO_MODE_GAMEPAD);
+                            BentoSetMode(BENTO_MODE_GAMEPAD, undefined, _playerIndex);
                         },
                     },
                 },
@@ -204,9 +184,9 @@ function ExampleChangeInputModeJSON()
                     vars: {
                         text: "Touch",
                         inoperative: not (BENTO_ON_DESKTOP || BENTO_ON_MOBILE),
-                        func: function()
+                        func: function(_playerIndex)
                         {
-                            BentoSetMode(BENTO_MODE_TOUCH);
+                            BentoSetMode(BENTO_MODE_TOUCH, undefined, _playerIndex);
                         },
                     },
                 },

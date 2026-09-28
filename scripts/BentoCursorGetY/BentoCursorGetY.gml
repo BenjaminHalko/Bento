@@ -3,22 +3,26 @@
 /// Returns the y-coordinate of the cursor's position.
 /// 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoCursorGetY(_layerOrName = undefined)
+function BentoCursorGetY(_layerOrName = undefined, _playerIndex = 0)
 {
     with(__BentoLayerSeek(_layerOrName))
     {
-        if (__inputMode == BENTO_MODE_MOUSE)
+        with(__playerArray[_playerIndex])
         {
-            return __pointerY;
-        }
-        else if (__inputModeNavigation)
-        {
-            return 0.5*(__cursorLastT + __cursorLastB);
-        }
-        else if (__inputMode == BENTO_MODE_TOUCH)
-        {
-            return (__pointerPrimaryState & __BENTO_STATE_START)? __pointerY : __pointerPrevY;
+            if (__inputMode == BENTO_MODE_MOUSE)
+            {
+                return __pointerY;
+            }
+            else if (__inputModeNavigation)
+            {
+                return 0.5*(__cursorLastT + __cursorLastB);
+            }
+            else if (__inputMode == BENTO_MODE_TOUCH)
+            {
+                return (__pointerPrimaryState & __BENTO_STATE_START)? __pointerY : __pointerPrevY;
+            }
         }
     }
     

@@ -3,11 +3,12 @@
 /// Returns whether the input mode has been set to `BENTO_MODE_MOUSE` or `BENTO_MODE_TOUCH`.
 /// 
 /// @param [environmentName=current]
+/// @param [playerIndex=0]
 
-function BentoUsingPointer(_environmentOrName = undefined)
+function BentoUsingPointer(_environmentOrName = undefined, _playerIndex = 0)
 {
     with(__BentoEnvironmentSeek(_environmentOrName))
     {
-        return ((__envInputMode == BENTO_MODE_MOUSE) || (__envInputMode == BENTO_MODE_TOUCH));
+        return ((__envInputMode[_playerIndex] == BENTO_MODE_MOUSE) || (__envInputMode[_playerIndex] == BENTO_MODE_TOUCH));
     }
 }

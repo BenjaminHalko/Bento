@@ -7,8 +7,9 @@
 ///      `BentoPrimaryGetClick()`.
 /// 
 /// @param [element]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetLongPress(_element = self)
+function BentoPrimaryGetLongPress(_element = self, _playerIndex = 0)
 {
-    return BentoExists(_element)? (_element.BENTO_VARS.__primaryLongState == __BENTO_STATE_START) : false;
+    return BentoExists(_element)? (_element.BENTO_VARS.__primaryLongState[_playerIndex] == __BENTO_STATE_START) : false;
 }

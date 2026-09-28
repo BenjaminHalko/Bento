@@ -9,16 +9,17 @@
 /// `BentoCursorGetEnterByPlayer()` will return `false`.
 /// 
 /// @param element
+/// @param [playerIndex=0]
 
-function BentoHoverSoft(_element)
+function BentoHoverSoft(_element, _playerIndex = 0)
 {
     if (not BentoExists(_element)) return false;
     
     with(_element.BENTO_VARS.__layer)
     {
-        if (__inputModeNavigation)
+        if (__playerArray[_playerIndex].__inputModeNavigation)
         {
-            __hoverElementSoft = _element;
+            __playerArray[_playerIndex].__hoverElementSoft = _element;
             return true;
         }
     }

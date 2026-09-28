@@ -6,8 +6,9 @@
 /// N.B. This function will not work unless `BENTO_ALLOW_ENCLOSED_GETTER` has been set to `true`.
 /// 
 /// @param [element=self]
+/// @param [playerIndex=0]
 
-function BentoGetEnclosed(_element = self)
+function BentoGetEnclosed(_element = self, _playerIndex = 0)
 {
     if (not BENTO_ALLOW_ENCLOSED_GETTER)
     {
@@ -21,5 +22,10 @@ function BentoGetEnclosed(_element = self)
         }
     }
     
-    return BentoExists(_element)? _element.BENTO_VARS.__enclosed : false;
+    if (not BentoExists(_element)) return false;
+    
+    with(_element.BENTO_VARS)
+    {
+        return __layer.__playerArray[_playerIndex].__inputModeNavigation? __enclosedNavigation : __enclosedPointer;
+    }
 }

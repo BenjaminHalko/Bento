@@ -22,35 +22,41 @@ if (keyboard_check_pressed(vk_f11) && (screenshotName != undefined))
 //like a DualShock 5 then this should probably be 4)
 var _gamepad = 0;
 
-if (BentoUsingPointer())
+var _playerIndex = 0;
+repeat(playerCount)
 {
-    // Pointer input generalises both mouse and touch input. As above, the primary action should be a
-    // continuous "held" value. The coordinate space for the x/y coordinates should be the same as the
-    // coordinate space that the Bento is drawn in. In this example, we're drawing the Bento in the
-    // standard Draw event which means we need to use room-space coordinates. If you're drawing in a
-    // Draw Bento event then you should use GUI-space coordinates.
-    BentoInputPointer(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), device_mouse_check_button(0, mb_left));
-}
-else
-{
-    if (BentoUsingKeyboard())
+    if (BentoUsingPointer(undefined, _playerIndex))
     {
-        var _dX = keyboard_check(vk_right) - keyboard_check(vk_left);
-        var _dY = keyboard_check(vk_down) - keyboard_check(vk_up);
-        BentoInputNavigation(_dX, _dY, keyboard_check(vk_space));
+        // Pointer input generalises both mouse and touch input. As above, the primary action should be a
+        // continuous "held" value. The coordinate space for the x/y coordinates should be the same as the
+        // coordinate space that the Bento is drawn in. In this example, we're drawing the Bento in the
+        // standard Draw event which means we need to use room-space coordinates. If you're drawing in a
+        // Draw Bento event then you should use GUI-space coordinates.
+        BentoInputPointer(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), device_mouse_check_button(0, mb_left), _playerIndex);
     }
-    else if (BentoUsingGamepad() && gamepad_is_connected(_gamepad))
+    else
     {
-        // "Gamepad" input is, in reality, a generic navigation input. Sending in a navigation value
-        // will push the Bento cursor in that direction. When holding a navigation input, the Bento system
-        // will automatically retrigger the navigation input leading to auto-scrolling on menus. You can
-        // configure the auto-scroll behavior by calling `BentoInputConfigureRetrigger()`. The primary
-        // action parameter should be a continuous "held" value too. The Bento system handles the "pressed"
-        // and "released" state internally.
-        var _dX = gamepad_axis_value(_gamepad, gp_axislh) + (gamepad_button_check(_gamepad, gp_padr) - gamepad_button_check(_gamepad, gp_padl));
-        var _dY = gamepad_axis_value(_gamepad, gp_axislv) + (gamepad_button_check(_gamepad, gp_padd) - gamepad_button_check(_gamepad, gp_padu));
-        BentoInputNavigation(_dX, _dY, gamepad_button_check(_gamepad, gp_face1));
+        if (BentoUsingKeyboard(undefined, _playerIndex))
+        {
+            var _dX = keyboard_check(vk_right) - keyboard_check(vk_left);
+            var _dY = keyboard_check(vk_down) - keyboard_check(vk_up);
+            BentoInputNavigation(_dX, _dY, keyboard_check(vk_space), 0.25, _playerIndex);
+        }
+        else if (BentoUsingGamepad(undefined, _playerIndex) && gamepad_is_connected(_gamepad))
+        {
+            // "Gamepad" input is, in reality, a generic navigation input. Sending in a navigation value
+            // will push the Bento cursor in that direction. When holding a navigation input, the Bento system
+            // will automatically retrigger the navigation input leading to auto-scrolling on menus. You can
+            // configure the auto-scroll behavior by calling `BentoInputConfigureRetrigger()`. The primary
+            // action parameter should be a continuous "held" value too. The Bento system handles the "pressed"
+            // and "released" state internally.
+            var _dX = gamepad_axis_value(_gamepad, gp_axislh) + (gamepad_button_check(_gamepad, gp_padr) - gamepad_button_check(_gamepad, gp_padl));
+            var _dY = gamepad_axis_value(_gamepad, gp_axislv) + (gamepad_button_check(_gamepad, gp_padd) - gamepad_button_check(_gamepad, gp_padu));
+            BentoInputNavigation(_dX, _dY, gamepad_button_check(_gamepad, gp_face1), 0.25, _playerIndex);
+        }
     }
+    
+    ++_playerIndex;
 }
 
 // No matter what input mode we're in, we can funnel "button" input into the system. "Button"\

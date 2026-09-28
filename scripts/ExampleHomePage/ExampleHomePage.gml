@@ -4,6 +4,8 @@ function ExampleHomePage()
 {
     with(oMain)
     {
+        playerCount = 1;
+        
         BentoLayerClear("example layer");
         with(BentoCreateBlank("example layer"))
         {
@@ -66,7 +68,10 @@ function ExampleHomePage()
                 BentoCreate(oBentoExButton, { text: "Listbox",                 func: ExampleListbox              });
                 BentoCreate(oBentoExButton, { text: "Listbox With Bar",        func: ExampleListboxWithBar       });
                 BentoCreate(oBentoExButton, { text: "Textbox",                 func: ExampleTextbox              });
-                BentoCreate(oBentoExButton, { text: "Absolute Position",       func: ExamplePosition             }); BentoSetNavigationWrap(false, true, BENTO_PREV_ELEMENT);
+                BentoCreate(oBentoExButton, { text: "Absolute Position",       func: ExamplePosition             });
+                BentoCreate(oBentoExButton, { text: "Two Players (Shared)",    func: ExamplePlayersShared        });
+                BentoCreate(oBentoExButton, { text: "Two Players (Separate)",  func: ExamplePlayersSeparate      });
+                BentoCreate(oBentoExButton, { text: "Two Players (Shared Scroller)", func: ExamplePlayersSharedScroller }); BentoSetNavigationWrap(false, true, BENTO_PREV_ELEMENT);
             }
         }
     }

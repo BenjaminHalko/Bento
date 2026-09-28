@@ -12,16 +12,17 @@
 /// 
 /// @param [element=self]
 /// @param [byPlayer=false]
+/// @param [playerIndex=0]
 
-function BentoHover(_element = self, _byPlayer = false)
+function BentoHover(_element = self, _byPlayer = false, _playerIndex = 0)
 {
     if (not BentoExists(_element)) return -1;
     
-    with(_element.BENTO_VARS.__layer)
+    with(_element.BENTO_VARS.__layer.__playerArray[_playerIndex])
     {
         if (__inputModeNavigation)
         {
-            if (__BentoGetHoverableInternal(_element, false))
+            if (__BentoGetHoverableInternal(_element, false, _playerIndex))
             {
                 __BentoSetHover(_element, _byPlayer);
                 __hoverElementSoft = BENTO_NO_ELEMENT;

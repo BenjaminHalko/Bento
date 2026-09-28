@@ -1,8 +1,9 @@
 // Feather disable all
 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoDebugStepOrder(_layerOrName = undefined)
+function BentoDebugStepOrder(_layerOrName = undefined, _playerIndex = 0)
 {
     if (not BENTO_RUNNING_FROM_IDE) return;
     if (BENTO_SHOW_DEBUG_MESSAGE == undefined) return;
@@ -55,7 +56,7 @@ function BentoDebugStepOrder(_layerOrName = undefined)
                 var _action  = "step";
                 
                 _buttonType = _self.BENTO_VARS.__buttonType;
-                _hovered    = _self.BENTO_VARS.__hoverState & __BENTO_STATE_ON;
+                _hovered    = _self.BENTO_VARS.__hoverState[_playerIndex] & __BENTO_STATE_ON;
             }
             
             if (_element != undefined)

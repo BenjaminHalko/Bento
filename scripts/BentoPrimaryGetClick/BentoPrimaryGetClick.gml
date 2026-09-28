@@ -11,12 +11,13 @@
 /// - A layer is using the touch input mode and the element is not inside a scrolling container
 /// 
 /// @param [element=self]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetClick(_element = self)
+function BentoPrimaryGetClick(_element = self, _playerIndex = 0)
 {
     with(__BentoGetVars(_element))
     {
-        return __layer.__primaryConsumed? false : (__clickState == 0b01);
+        return __layer.__playerArray[_playerIndex].__primaryConsumed? false : (__clickState[_playerIndex] == 0b01);
     }
     
     return false;

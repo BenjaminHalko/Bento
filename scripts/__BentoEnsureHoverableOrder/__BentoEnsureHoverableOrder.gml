@@ -8,30 +8,32 @@ function __BentoEnsureHoverableOrder()
     __dirtyFlags = ~((~__dirtyFlags) | __BENTO_DIRTY_HOVERABLE);
     
     ++__hoverableRegenCount;
-    array_resize(__hoverableOrder, 0);
+    array_resize(__hoverableOrderPointer, 0);
+    array_resize(__hoverableOrderNavigation, 0);
     
-    var _rootElement = __GetFocusRoot();
-    if (BentoExists(_rootElement))
+    var _pointer = false;
+    var _navigation = false;
+    var _i = 0;
+    repeat(BENTO_MAX_PLAYERS)
     {
-        if (BentoExists(__carryItemElement))
-        {
-            var _carryItemVars = __carryItemElement.BENTO_VARS;
-            var _carryChannel  = _carryItemVars.__carryItemChannel;
-        }
-        else
-        {
-            var _carryChannel  = undefined;
-            var _carryItemVars = undefined;
-        }
-        
-        if (__inputModePointer)
-        {
-            __BentoEnsureHoverableOrderInnerPointer(__hoverableOrder, _rootElement.BENTO_VARS, __hoverableRegenCount, _carryItemVars, _carryChannel);
-        }
-        else if (__inputModeNavigation)
-        {
-            __BentoEnsureHoverableOrderInnerNavigation(__hoverableOrder, _rootElement.BENTO_VARS, __hoverableRegenCount, _carryItemVars, _carryChannel);
-        }
+        _pointer |= __playerArray[_i].__inputModePointer;
+        _navigation |= __playerArray[_i].__inputModeNavigation;
+        ++_i;
+    }
+    
+    var _carryItemVars = BentoExists(__carryItemElement)? __carryItemElement.BENTO_VARS : undefined;
+    var _carryChannel = (_carryItemVars != undefined)? _carryItemVars.__carryItemChannel : undefined;
+    
+    var _rootElement = __GetFocusRoot(false);
+    if (_pointer && BentoExists(_rootElement))
+    {
+        __BentoEnsureHoverableOrderInnerPointer(__hoverableOrderPointer, _rootElement.BENTO_VARS, __hoverableRegenCount, _carryItemVars, _carryChannel);
+    }
+    
+    var _rootElement = __GetFocusRoot(true);
+    if (_navigation && BentoExists(_rootElement))
+    {
+        __BentoEnsureHoverableOrderInnerNavigation(__hoverableOrderNavigation, _rootElement.BENTO_VARS, __hoverableRegenCount, _carryItemVars, _carryChannel);
     }
 }
 
@@ -43,7 +45,7 @@ function __BentoEnsureHoverableOrderInnerPointer(_hoverableOrder, _elementVars, 
         
         if (BENTO_ALLOW_ENCLOSED_GETTER)
         {
-            __enclosed = (_hoverableIndex == undefined);
+            __enclosedPointer = (_hoverableIndex == undefined);
         }
         
         //Elements can only be hovered if the are not enclosed as indicated by `_hoverableIndex`
@@ -84,10 +86,10 @@ function __BentoEnsureHoverableOrderInnerPointer(_hoverableOrder, _elementVars, 
             {
                 if ((__buttonType & BENTO_BUTTON_POINTER) && ((not __carryOnlyButtonWhenTarget) || _carryIsTarget))
                 {
-                    __buttonIndex = _hoverableIndex;
+                    __buttonIndexPointer = _hoverableIndex;
                 }
                 
-                __hoverableIndex = _hoverableIndex;
+                __hoverableIndexPointer = _hoverableIndex;
                 array_push(_hoverableOrder, __funcHover);
                 
                 return true;
@@ -106,7 +108,7 @@ function __BentoEnsureHoverableOrderInnerNavigation(_hoverableOrder, _elementVar
         
         if (BENTO_ALLOW_ENCLOSED_GETTER)
         {
-            __enclosed = (_hoverableIndex == undefined);
+            __enclosedNavigation = (_hoverableIndex == undefined);
         }
         
         //Enclose our children if the enclose type matches the input mode
@@ -136,9 +138,9 @@ function __BentoEnsureHoverableOrderInnerNavigation(_hoverableOrder, _elementVar
             if (((not __carryOnlyButtonWhenTarget) && ((_carryChannel == undefined) || (_carryItemVars == self)))
             ||  ((_carryChannel == __carryTargetChannel) && ((not is_callable(__carryTargetFunc)) || __carryTargetFunc())))
             {
-                __buttonIndex = _hoverableIndex;
+                __buttonIndexNavigation = _hoverableIndex;
                 
-                __hoverableIndex = _hoverableIndex;
+                __hoverableIndexNavigation = _hoverableIndex;
                 array_push(_hoverableOrder, __attachedElement);
                 
                 return true;

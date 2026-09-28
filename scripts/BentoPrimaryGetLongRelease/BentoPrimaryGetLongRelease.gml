@@ -7,8 +7,9 @@
 ///      `BentoPrimaryGetClick()`.
 /// 
 /// @param [element]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetLongRelease(_element = self)
+function BentoPrimaryGetLongRelease(_element = self, _playerIndex = 0)
 {
-    return BentoExists(_element)? (_element.BENTO_VARS.__primaryLongState == __BENTO_STATE_END) : false;
+    return BentoExists(_element)? (_element.BENTO_VARS.__primaryLongState[_playerIndex] == __BENTO_STATE_END) : false;
 }

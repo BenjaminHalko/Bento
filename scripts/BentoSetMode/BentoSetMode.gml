@@ -1,6 +1,6 @@
 // Feather disable all
 
-/// Sets the input mode for an environment. This should be one of the following constants:
+/// Sets one player's input mode for an environment. This should be one of the following constants:
 /// 
 /// - `BENTO_MODE_UNKNOWN`
 /// - `BENTO_MODE_MOUSE`
@@ -13,8 +13,9 @@
 /// 
 /// @param mode
 /// @param [environmentName=current]
+/// @param [playerIndex=0]
 
-function BentoSetMode(_newMode, _environmentOrName = undefined)
+function BentoSetMode(_newMode, _environmentOrName = undefined, _playerIndex = 0)
 {
     var _environment = __BentoEnvironmentSeek(_environmentOrName);
     if (_environment == undefined)
@@ -35,16 +36,16 @@ function BentoSetMode(_newMode, _environmentOrName = undefined)
     
     with(_environment)
     {
-        if (_newMode == __envInputMode) return;
+        if (_newMode == __envInputMode[_playerIndex]) return;
         
-        __envInputMode = _newMode;
+        __envInputMode[_playerIndex] = _newMode;
         
         if (BENTO_DEBUG_LEVEL >= 1)
         {
-            __BentoTrace($"Input mode for environment {__BentoGetStructPointer(self)} set to {__BentoGetInputModeName(__envInputMode)}");
+            __BentoTrace($"Input mode for player {_playerIndex} in environment {__BentoGetStructPointer(self)} set to {__BentoGetInputModeName(_newMode)}");
         }
         
-        with(__layerCurrent)
+        with(array_last(__layerArray))
         {
             __UpdateInputMode();
         }

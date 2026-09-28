@@ -7,14 +7,16 @@
 /// @param x
 /// @param y
 /// @param primaryAction
+/// @param [playerIndex=0]
 
-function BentoInputPointer(_x, _y, _primaryAction)
+function BentoInputPointer(_x, _y, _primaryAction, _playerIndex = 0)
 {
     static _system = __BentoSystem();
     with(_system.__environmentCurrent)
     {
-        __envMouseX    = _x / _system.__globalScale;
-        __envMouseY    = _y / _system.__globalScale;
-        __envMouseHold = _primaryAction;
+        __envMouseX[_playerIndex]    = _x / _system.__globalScale;
+        __envMouseY[_playerIndex]    = _y / _system.__globalScale;
+        __envMouseHold[_playerIndex] = _primaryAction;
+        __envPlayerActive[_playerIndex] = true;
     }
 }

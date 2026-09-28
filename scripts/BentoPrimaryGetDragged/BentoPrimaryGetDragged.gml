@@ -5,12 +5,13 @@
 /// `BENTO_MODE_MOUSE` or `BENTO_MODE_TOUCH` this function always returns `false`.
 /// 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetDragged(_layerOrName = undefined)
+function BentoPrimaryGetDragged(_layerOrName = undefined, _playerIndex = 0)
 {
     with(__BentoLayerSeek(_layerOrName))
     {
-        return __pointerTravelled;
+        return __playerArray[_playerIndex].__pointerTravelled;
     }
     
     return false;

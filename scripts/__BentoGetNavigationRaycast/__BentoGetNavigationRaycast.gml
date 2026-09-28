@@ -20,9 +20,9 @@ function __BentoGetNavigationRaycast(_resultStruct, _x, _y, _dX, _dY, _exclude, 
     var _direction = point_direction(0, 0, _dX, _dY);
     
     var _layer = _system.__layerCurrent;
-    var _hoverableOrder = _layer.__hoverableOrder;
+    var _hoverableOrder = _layer.__hoverableOrderNavigation;
     
-    if (not _layer.__inputModeNavigation)
+    if (not __inputModeNavigation)
     {
         __BentoError("Can only use `__BentoGetNavigationRaycast()` in navigation mode");
     }
@@ -65,7 +65,7 @@ function __BentoGetNavigationRaycast(_resultStruct, _x, _y, _dX, _dY, _exclude, 
                             //outside of view but conceptually accessible from the current element.
                             //
                             //FIXME - Change to a check against the joint scissor and scroll parent
-                            if (__BentoGetHoverableInternal(self, not _sameParent))
+                            if (__BentoGetHoverableInternal(self, not _sameParent, other.__playerIndex))
                             {
                                 _minElement    = self;
                                 _minWeight     = _weight;

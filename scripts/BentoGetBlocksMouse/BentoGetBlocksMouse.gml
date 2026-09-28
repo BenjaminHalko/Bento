@@ -25,24 +25,31 @@ function BentoGetBlocksMouse(_environmentName = undefined)
     {
         with(__layerCurrent)
         {
-            if (not __inputModePointer) return false;
-            
             var _focusType = (__focusTop != undefined)? __focusTop.BENTO_VARS.__focusType : BENTO_FOCUS_POINTER_IGNORE;
-            if ((_focusType != BENTO_FOCUS_POINTER_IGNORE) && (_focusType != BENTO_FOCUS_POINTER_CANCEL_ALWAYS))
-            {
-                return true;
-            }
-            
-            if (BentoExists(__holdElement))
-            {
-                return true;
-            }
-            
             __BentoEnsureHoverableOrder();
             
-            if (BentoExists(__hoverElement) && (__hoverElement.BENTO_VARS.__hoverableIndex == __hoverableRegenCount))
+            var _i = 0;
+        repeat(BENTO_MAX_PLAYERS)
             {
-                return true;
+                with(__playerArray[_i])
+                {
+                    if (__inputModePointer && (_focusType != BENTO_FOCUS_POINTER_IGNORE) && (_focusType != BENTO_FOCUS_POINTER_CANCEL_ALWAYS))
+                    {
+                        return true;
+                    }
+                    
+                    if (__inputModePointer && BentoExists(__holdElement))
+                    {
+                        return true;
+                    }
+                    
+                    if (__inputModePointer && BentoExists(__hoverElement) && (__hoverElement.BENTO_VARS.__hoverableIndexPointer == other.__hoverableRegenCount))
+                    {
+                        return true;
+                    }
+                }
+                
+                ++_i;
             }
         }
     }

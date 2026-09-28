@@ -9,15 +9,16 @@
 ///      hovered before doing anything with these coordinates .
 /// 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoCursorGetBox(_layerOrName = undefined)
+function BentoCursorGetBox(_layerOrName = undefined, _playerIndex = 0)
 {
     static _result = {};
     
     var _layer = __BentoLayerSeek(_layerOrName);
-    if (_layer == undefined)
+    if (_layer != undefined)
     {
-        with(_layer)
+        with(_layer.__playerArray[_playerIndex])
         {
             _result.left   = __cursorLastL;
             _result.top    = __cursorLastT;

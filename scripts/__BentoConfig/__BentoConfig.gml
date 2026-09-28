@@ -6,6 +6,9 @@
 // General
 ///////
 
+// How many players Bento tracks.
+#macro BENTO_MAX_PLAYERS 4
+
 // Which input mode to default to when running on desktop platforms. Must be a `BENTO_MODE_*`
 // constant.
 #macro BENTO_DESKTOP_DEFAULT_INPUT_MODE  BENTO_MODE_MOUSE

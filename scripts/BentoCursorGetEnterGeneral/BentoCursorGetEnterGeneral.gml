@@ -6,9 +6,10 @@
 /// of behaviours.
 /// 
 /// @param [element=self]
+/// @param [playerIndex=0]
 
-function BentoCursorGetEnterGeneral(_element = self)
+function BentoCursorGetEnterGeneral(_element = self, _playerIndex = 0)
 {
     if (not BentoExists(_element)) return false;
-    return (_element.BENTO_VARS.__hoverState == __BENTO_STATE_START);
+    return (_element.BENTO_VARS.__hoverState[_playerIndex] == __BENTO_STATE_START);
 }

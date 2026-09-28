@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ExamplePlayersSeparate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ExamplePlayersSeparate",
+  "parent":{
+    "name":"Pages",
+    "path":"folders/Examples/Pages.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

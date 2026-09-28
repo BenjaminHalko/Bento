@@ -14,14 +14,21 @@ function __BentoEnsureStepOrder()
     
     array_resize(__stepOrder, 0);
     
-    var _rootElement = __GetFocusRoot();
+    var _navigation = true;
+    var _i = 0;
+    repeat(BENTO_MAX_PLAYERS)
+    {
+        if (__playerArray[_i].__inputModePointer) _navigation = false;
+        ++_i;
+    }
+    var _rootElement = __GetFocusRoot(_navigation);
     if (BentoExists(_rootElement))
     {
-        __BentoEnsureStepOrderInner(self, __stepOrder, _rootElement.BENTO_VARS, __inputModePointer? BENTO_BUTTON_POINTER : BENTO_BUTTON_NAVIGATION);
+        __BentoEnsureStepOrderInner(self, __stepOrder, _rootElement.BENTO_VARS);
     }
 }
 
-function __BentoEnsureStepOrderInner(_layer, _stepOrder, _elementVars, _inputModeType)
+function __BentoEnsureStepOrderInner(_layer, _stepOrder, _elementVars)
 {
     with(_elementVars)
     {
@@ -34,7 +41,7 @@ function __BentoEnsureStepOrderInner(_layer, _stepOrder, _elementVars, _inputMod
         //Determine whether we need to execute the Step user event
         //
         //NOTE - This logic must match `BentoGetExecutesStep()`
-        if (BENTO_ALWAYS_EXECUTE_STEP || (__buttonIndex == __layer.__hoverableRegenCount) || __forceStep || __focused || __scissorEnabled)
+        if (BENTO_ALWAYS_EXECUTE_STEP || (__buttonIndexPointer == __layer.__hoverableRegenCount) || (__buttonIndexNavigation == __layer.__hoverableRegenCount) || __forceStep || __focused || __scissorEnabled)
         {
             __executesStep = true;
             array_push(_stepOrder, __eventStep);
@@ -49,7 +56,7 @@ function __BentoEnsureStepOrderInner(_layer, _stepOrder, _elementVars, _inputMod
             var _i = 0;
             repeat(array_length(_array))
             {
-                __BentoEnsureStepOrderInner(_layer, _stepOrder, _array[_i], _inputModeType);
+                __BentoEnsureStepOrderInner(_layer, _stepOrder, _array[_i]);
                 ++_i;
             }
             
@@ -73,7 +80,7 @@ function __BentoEnsureStepOrderInner(_layer, _stepOrder, _elementVars, _inputMod
             var _i = 0;
             repeat(array_length(_array))
             {
-                __BentoEnsureStepOrderInner(_layer, _stepOrder, _array[_i], _inputModeType);
+                __BentoEnsureStepOrderInner(_layer, _stepOrder, _array[_i]);
                 ++_i;
             }
         }

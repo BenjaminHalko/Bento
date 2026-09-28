@@ -3,6 +3,9 @@
 #macro BENTO_EXAMPLE_BLUE          #4c85ff
 #macro BENTO_EXAMPLE_DARK_BLUE     #1657e5
 #macro BENTO_EXAMPLE_RED           #ff7575
+#macro BENTO_EXAMPLE_GREEN         #75ff8e
+#macro BENTO_EXAMPLE_CYAN          #75f0ff
+#macro BENTO_EXAMPLE_PINK          #ff75e3
 
 #macro BENTO_EXAMPLE_SHADOW_ALPHA             0.33
 #macro BENTO_EXAMPLE_SHADOW_OFFSET            2

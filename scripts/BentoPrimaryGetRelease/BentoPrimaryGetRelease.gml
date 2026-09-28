@@ -7,9 +7,10 @@
 ///      `BentoPrimaryGetClick()`.
 /// 
 /// @param [element]
+/// @param [playerIndex=0]
 
-function BentoPrimaryGetRelease(_element = self)
+function BentoPrimaryGetRelease(_element = self, _playerIndex = 0)
 {
     if (not BentoExists(_element)) return false;
-    return (_element.BENTO_VARS.__primaryState == __BENTO_STATE_END);
+    return (_element.BENTO_VARS.__primaryState[_playerIndex] == __BENTO_STATE_END);
 }

@@ -17,17 +17,25 @@ function __BentoClassEnvironment(_name) constructor
     // Raw input tracking
     ///////
     
-    __envMouseX     = 0;
-    __envMouseY     = 0;
-    __envMouseHold  = false;
-    __envMouseState = __BENTO_STATE_OFF;
+    __envPlayerActive = array_create(BENTO_MAX_PLAYERS, false);
     
-    __envNavigationDX    = 0;
-    __envNavigationDY    = 0;
-    __envNavigationHold  = false;
-    __envNavigationState = __BENTO_STATE_OFF;
+    __envMouseX     = array_create(BENTO_MAX_PLAYERS, 0);
+    __envMouseY     = array_create(BENTO_MAX_PLAYERS, 0);
+    __envMouseHold  = array_create(BENTO_MAX_PLAYERS, false);
+    __envMouseState = array_create(BENTO_MAX_PLAYERS, __BENTO_STATE_OFF);
     
-    __envHotkeyInputMap = ds_map_create();
+    __envNavigationDX    = array_create(BENTO_MAX_PLAYERS, 0);
+    __envNavigationDY    = array_create(BENTO_MAX_PLAYERS, 0);
+    __envNavigationHold  = array_create(BENTO_MAX_PLAYERS, false);
+    __envNavigationState = array_create(BENTO_MAX_PLAYERS, __BENTO_STATE_OFF);
+    
+    __envHotkeyInputMap = array_create(BENTO_MAX_PLAYERS, undefined);
+    var _i = 0;
+    repeat(BENTO_MAX_PLAYERS)
+    {
+        __envHotkeyInputMap[_i] = ds_map_create();
+        ++_i;
+    }
     __envHotkeySeenMap  = ds_map_create();
     
     ///////
@@ -59,6 +67,8 @@ function __BentoClassEnvironment(_name) constructor
     {
         __BentoTrace($"Input mode for environment {__BentoGetStructPointer(self)} defaults to {__BentoGetInputModeName(__envInputMode)} based on the current OS ({os_type})");
     }
+    
+    __envInputMode = array_create(BENTO_MAX_PLAYERS, __envInputMode);
     
     ///////
     // Text input tracking
@@ -134,14 +144,19 @@ function __BentoClassEnvironment(_name) constructor
         var _layerArray = __layerArray;
         
         //Advance mouse and navigation state
-        __envMouseState = __envMouseState >> 1;
-        if (__envMouseHold) __envMouseState |= __BENTO_STATE_START;
-        
-        __envNavigationState = __envNavigationState >> 1;
-        if (__envNavigationHold) __envNavigationState |= __BENTO_STATE_START;
+        var _i = 0;
+        repeat(BENTO_MAX_PLAYERS)
+        {
+            __envMouseState[_i] = __envMouseState[_i] >> 1;
+            if (__envMouseHold[_i]) __envMouseState[_i] |= __BENTO_STATE_START;
+            
+            __envNavigationState[_i] = __envNavigationState[_i] >> 1;
+            if (__envNavigationHold[_i]) __envNavigationState[_i] |= __BENTO_STATE_START;
+            
+            ++_i;
+        }
         
         var _layerCount = array_length(_layerArray);
-        if (_layerCount <= 0) return;
         
         __BentoEnvironmentTargetPush(self);
         
@@ -179,7 +194,13 @@ function __BentoClassEnvironment(_name) constructor
         }
         
         //Wipe out the hotkeys, nullifying them for the next update loop
-        ds_map_clear(__envHotkeyInputMap);
+        var _i = 0;
+        repeat(BENTO_MAX_PLAYERS)
+        {
+            ds_map_clear(__envHotkeyInputMap[_i]);
+            __envPlayerActive[_i] = false;
+            ++_i;
+        }
         
         __BentoEnvironmentTargetPop();
     }

@@ -1,8 +1,9 @@
 // Feather disable all
 
 /// @param [layerOrName=current]
+/// @param [playerIndex=0]
 
-function BentoDebugHoverOrder(_layerOrName = undefined)
+function BentoDebugHoverOrder(_layerOrName = undefined, _playerIndex = 0)
 {
     if (not BENTO_RUNNING_FROM_IDE) return;
     if (BENTO_SHOW_DEBUG_MESSAGE == undefined) return;
@@ -13,11 +14,12 @@ function BentoDebugHoverOrder(_layerOrName = undefined)
         __BentoEnsureHoverableOrder();
         
         var _array = [];
+        var _hoverableOrder = __playerArray[_playerIndex].__inputModeNavigation? __hoverableOrderNavigation : __hoverableOrderPointer;
         
         var _i = 0;
-        repeat(array_length(__hoverableOrder))
+        repeat(array_length(_hoverableOrder))
         {
-            var _entry = __hoverableOrder[_i];
+            var _entry = _hoverableOrder[_i];
             var _self = is_method(_entry)? method_get_self(_entry) : _entry;
             
             var _buttonType = undefined;
@@ -42,7 +44,7 @@ function BentoDebugHoverOrder(_layerOrName = undefined)
                 var _element = _self;
                 
                 _buttonType = _self.BENTO_VARS.__buttonType;
-                _hovered    = _self.BENTO_VARS.__hoverState & __BENTO_STATE_ON;
+                _hovered    = _self.BENTO_VARS.__hoverState[_playerIndex] & __BENTO_STATE_ON;
             }
             
             if (_element != undefined)

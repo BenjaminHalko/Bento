@@ -2,12 +2,13 @@
 
 /// @param [layerOrName]
 /// @param [environmentOrName]
+/// @param [playerIndex=0]
 
-function BentoLayerGetHovered(_layerName = undefined, _environmentName = undefined)
+function BentoLayerGetHovered(_layerName = undefined, _environmentName = undefined, _playerIndex = 0)
 {
     with(__BentoLayerSeek(_layerName, _environmentName))
     {
-        return __hoverElement;
+        return __playerArray[_playerIndex].__hoverElement;
     }
     
     return BENTO_NO_ELEMENT;
